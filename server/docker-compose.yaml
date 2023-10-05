@@ -1,0 +1,27 @@
+version: "3"
+# services:
+#   phpmyadmin:
+#     image: phpmyadmin:latest
+#     ports:
+#       - "8080:80"
+#     depends_on:
+#       - db
+#   db:
+#     image: mysql:latest
+#     environment:
+#       - MYSQL_ROOT_PASSWORD=yourpassword
+#       - MYSQL_DATABASE=node-complete
+#     ports:
+#       - "3306:3306"
+#     volumes:
+#       - ./db:/docker-entrypoint-initdb.d
+services:
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodbdata:/data/db
+
+volumes:
+  mongodbdata:
