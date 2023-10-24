@@ -4,7 +4,7 @@ const sinon = require("sinon");
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const AuthController = require("../controllers/auth");
-const { default: mongoose, mongo } = require("mongoose");
+const mongoose = require("mongoose");
 
 describe("Auth controller - Login", () => {
   it("should throw an error with code 500 if accessing database fails", (done) => {

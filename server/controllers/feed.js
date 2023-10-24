@@ -56,7 +56,7 @@ exports.createPost = async (req, res, next) => {
     await post.save();
     const user = await User.findById(req.userId);
     user.posts.push(post);
-    await user.save();
+    const savedUser = await user.save();
     io.getIO().emit("posts", {
       action: "create",
       post: {
@@ -72,7 +72,9 @@ exports.createPost = async (req, res, next) => {
       post: post,
       creator: { _id: user._id, name: user.name },
     });
+    return savedUser;
   } catch (err) {
+    console.log(err);
     if (!err.statusCode) {
       err.statusCode = 500;
     }
@@ -168,7 +170,7 @@ exports.deletePost = async (req, res, next) => {
     const user = await User.findById(req.userId);
     user.posts.pull(postId);
     await user.save();
-    io.getIO().emit("posts", { action: "delete", post: postId})
+    io.getIO().emit("posts", { action: "delete", post: postId });
 
     res.status(200).json({ message: "Deleted post." });
   } catch (err) {
